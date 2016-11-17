@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>spring-cloud-starter-task-jdbchdfs-local</artifactId>
+    <packaging>jar</packaging>
+    <name>Spring Cloud Starter Task Jdbchdfs Local</name>
+    <description>Spring Cloud Task Jdbc Hdfs Starter</description>
+
+    <parent>
+        <groupId>org.springframework.cloud.task.app</groupId>
+        <artifactId>jdbchdfs-task-app-starters-build</artifactId>
+        <version>1.1.0.BUILD-SNAPSHOT</version>
+    </parent>
+
+    <properties>
+        <local.deployer.version>1.0.0.BUILD-SNAPSHOT</local.deployer.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud.task.app</groupId>
+            <artifactId>spring-cloud-task-jdbchdfs-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-deployer-local</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-task-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>integration-tests</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>no-integration-tests</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                            <excludedGroups>org.springframework.cloud.task.app.jdbc.hdfs.local.JdbcHdfsIntegrationTest</excludedGroups>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-app-starter-doc-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.cloud.stream.app.plugin</groupId>
+                <artifactId>spring-cloud-stream-app-maven-plugin</artifactId>
+                <configuration>
+                    <generatedProjectHome>${session.executionRootDirectory}/apps</generatedProjectHome>
+                    <generatedProjectVersion>${project.version}</generatedProjectVersion>
+                    <bom>
+                        <name>scs-bom</name>
+                        <groupId>org.springframework.cloud.task.app</groupId>
+                        <artifactId>jdbchdfs-local-task-app-dependencies</artifactId>
+                        <version>${project.version}</version>
+                    </bom>
+                    <generatedApps>
+                        <jdbchdfs-local-task/>
+                    </generatedApps>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
