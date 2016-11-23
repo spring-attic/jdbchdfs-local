@@ -25,6 +25,6 @@ public class JdbcHdfsTests {
 
 	@Test
 	public void test() {
-		//this test/class will be removed, when JdbcHdfsTaskIntegrationTests are run. 
+		//this test/class will be removed, when JdbcHdfsTaskIntegrationTests are run.
 	}
 }
