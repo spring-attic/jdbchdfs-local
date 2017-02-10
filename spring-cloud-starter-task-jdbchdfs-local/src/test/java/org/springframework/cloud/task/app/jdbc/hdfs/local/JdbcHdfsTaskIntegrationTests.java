@@ -36,8 +36,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,6 +47,7 @@ import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.jdbc.datasource.init.DatabasePopulator;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -59,12 +59,11 @@ import static org.junit.Assert.assertNotNull;
  * @author Glenn Renfro
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {JdbcHdfsDatabaseConfiguration.class,
+@SpringBootTest(classes = {JdbcHdfsDatabaseConfiguration.class,
 		JdbcHdfsTaskIntegrationTests.TestConfig.class, JdbcHdfsTaskIntegrationTests.TestJdbcHdfsTaskApplication.class})
-@IntegrationTest
 public abstract class JdbcHdfsTaskIntegrationTests {
 
-	@IntegrationTest({"spring.cloud.task.closecontext.enable:false",
+	@TestPropertySource({"spring.cloud.task.closecontext.enable:false",
 			"hadoop.home.dir=/data",
 			"directory=${java.io.tmpdir}/jdbchdfs-task/",
 			"spring.profiles.active=master",
